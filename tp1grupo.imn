@@ -4,15 +4,31 @@ node n1 {
     network-config {
 	hostname n1
 	!
+	interface eth3
+	 ipv6 address 2001:13::1/64
+	 ip address 10.0.0.4/16
+	!
+	interface eth2
+	 ipv6 address 2001:12::1/64
+	 ip address 10.0.0.3/16
+	!
+	interface eth1
+	 ipv6 address 2001:10::2/64
+	 ip address 10.0.0.2/16
+	!
 	interface eth0
 	 ipv6 address 2001:9::2/64
 	 ip address 10.0.0.1/16
 	!
     }
     canvas c1
-    iconcoords {720.0 537.0}
-    labelcoords {720.0 569.0}
+    iconcoords {689.0 514.0}
+    labelcoords {728.0 511.0}
     interface-peer {eth0 n7}
+    services {zebra RIP vtysh IPForward}
+    interface-peer {eth1 n2}
+    interface-peer {eth2 n9}
+    interface-peer {eth3 n10}
 }
 
 node n2 {
@@ -20,6 +36,10 @@ node n2 {
     model router
     network-config {
 	hostname n2
+	!
+	interface eth3
+	 ipv6 address 2001:10::1/64
+	 ip address 10.0.1.10/24
 	!
 	interface eth2
 	 ipv6 address 2001:5::2/64
@@ -40,6 +60,7 @@ node n2 {
     interface-peer {eth0 n7}
     interface-peer {eth1 n4}
     interface-peer {eth2 n3}
+    interface-peer {eth3 n1}
 }
 
 node n3 {
@@ -124,6 +145,10 @@ node n6 {
     network-config {
 	hostname n6
 	!
+	interface eth3
+	 ipv6 address 2001:11::1/64
+	 ip address 10.3.0.6/16
+	!
 	interface eth2
 	 ipv6 address 2001:8::1/64
 	 ip address 10.3.0.3/16
@@ -143,6 +168,7 @@ node n6 {
     interface-peer {eth0 n8}
     interface-peer {eth1 n4}
     interface-peer {eth2 n5}
+    interface-peer {eth3 n7}
 }
 
 node n7 {
@@ -150,6 +176,10 @@ node n7 {
     model router
     network-config {
 	hostname n7
+	!
+	interface eth3
+	 ipv6 address 2001:11::2/64
+	 ip address 10.2.0.4/16
 	!
 	interface eth2
 	 ipv6 address 2001:9::1/64
@@ -170,6 +200,7 @@ node n7 {
     interface-peer {eth0 n8}
     interface-peer {eth1 n2}
     interface-peer {eth2 n1}
+    interface-peer {eth3 n6}
 }
 
 node n8 {
@@ -192,6 +223,40 @@ node n8 {
     labelcoords {451.0 118.0}
     interface-peer {eth0 n6}
     interface-peer {eth1 n7}
+}
+
+node n9 {
+    type router
+    model router
+    network-config {
+	hostname n9
+	!
+	interface eth0
+	 ipv6 address 2001:12::2/64
+	 ip address 10.0.0.5/16
+	!
+    }
+    canvas c1
+    iconcoords {658.0 648.0}
+    labelcoords {658.0 680.0}
+    interface-peer {eth0 n1}
+}
+
+node n10 {
+    type router
+    model router
+    network-config {
+	hostname n10
+	!
+	interface eth0
+	 ipv6 address 2001:13::2/64
+	 ip address 10.0.0.6/16
+	!
+    }
+    canvas c1
+    iconcoords {842.0 586.0}
+    labelcoords {842.0 618.0}
+    interface-peer {eth0 n1}
 }
 
 link l1 {
@@ -241,6 +306,26 @@ link l9 {
 
 link l10 {
     nodes {n7 n1}
+    bandwidth 0
+}
+
+link l11 {
+    nodes {n2 n1}
+    bandwidth 0
+}
+
+link l12 {
+    nodes {n6 n7}
+    bandwidth 0
+}
+
+link l13 {
+    nodes {n1 n9}
+    bandwidth 0
+}
+
+link l14 {
+    nodes {n1 n10}
     bandwidth 0
 }
 
@@ -297,7 +382,7 @@ annotation a4 {
 }
 
 annotation a5 {
-    iconcoords {638.0 480.0 817.0 630.0}
+    iconcoords {585.0 473.0 895.0 706.0}
     type oval
     label {}
     labelcolor black
@@ -339,7 +424,7 @@ annotation a8 {
 }
 
 annotation a9 {
-    iconcoords {692.0 592.0}
+    iconcoords {743.0 632.0}
     type text
     label {AS 65000}
     labelcolor #ff0000
@@ -390,7 +475,7 @@ annotation a13 {
 }
 
 annotation a14 {
-    iconcoords {712.0 612.0}
+    iconcoords {767.0 655.0}
     type text
     label {RIP}
     labelcolor #5bb900
