@@ -5,27 +5,22 @@ node n1 {
 	hostname n1
 	!
 	interface eth3
-	 ipv6 address 2001:13::1/64
 	 ip address 10.0.0.4/16
 	!
 	interface eth2
-	 ipv6 address 2001:12::1/64
 	 ip address 10.0.0.3/16
 	!
 	interface eth1
-	 ipv6 address 2001:10::2/64
 	 ip address 10.0.0.2/16
 	!
 	interface eth0
-	 ipv6 address 2001:9::2/64
 	 ip address 10.0.0.1/16
 	!
     }
     canvas c1
-    iconcoords {689.0 514.0}
-    labelcoords {728.0 511.0}
+    iconcoords {662.0 504.0}
+    labelcoords {625.0 493.0}
     interface-peer {eth0 n7}
-    services {RIP zebra IPForward}
     interface-peer {eth1 n2}
     interface-peer {eth2 n9}
     interface-peer {eth3 n10}
@@ -38,29 +33,25 @@ node n2 {
 	hostname n2
 	!
 	interface eth3
-	 ipv6 address 2001:10::1/64
-	 ip address 10.0.1.10/24
-	!
-	interface eth2
-	 ipv6 address 2001:5::2/64
-	 ip address 10.1.0.3/16
-	!
-	interface eth1
-	 ipv6 address 2001:3::1/64
 	 ip address 10.1.0.2/16
 	!
+	interface eth1
+	 ip address 10.1.0.4/16
+	!
+	interface eth2
+	 ip address 10.1.0.3/16
+	!
 	interface eth0
-	 ipv6 address 2001:2::2/64
 	 ip address 10.1.0.1/16
 	!
     }
     canvas c1
-    iconcoords {395.0 619.0}
-    labelcoords {395.0 651.0}
-    interface-peer {eth0 n7}
+    iconcoords {333.0 561.0}
+    labelcoords {333.0 593.0}
+    interface-peer {eth0 n1}
     interface-peer {eth1 n4}
     interface-peer {eth2 n3}
-    interface-peer {eth3 n1}
+    interface-peer {eth3 n7}
 }
 
 node n3 {
@@ -70,21 +61,18 @@ node n3 {
 	hostname n3
 	!
 	interface eth2
-	 ipv6 address 2001:6::1/64
-	 ip address 10.1.0.9/16
+	 ip address 10.1.0.10/16
 	!
 	interface eth1
-	 ipv6 address 2001:5::1/64
-	 ip address 10.1.0.8/16
+	 ip address 10.1.0.9/16
 	!
 	interface eth0
-	 ipv6 address 2001:4::2/64
-	 ip address 10.1.0.7/16
+	 ip address 10.1.0.8/16
 	!
     }
     canvas c1
-    iconcoords {140.0 573.0}
-    labelcoords {140.0 605.0}
+    iconcoords {56.0 541.0}
+    labelcoords {56.0 573.0}
     interface-peer {eth0 n4}
     interface-peer {eth1 n2}
     interface-peer {eth2 n5}
@@ -97,21 +85,18 @@ node n4 {
 	hostname n4
 	!
 	interface eth2
-	 ipv6 address 2001:7::1/64
-	 ip address 10.1.0.6/16
+	 ip address 10.1.0.7/16
 	!
 	interface eth1
-	 ipv6 address 2001:4::1/64
-	 ip address 10.1.0.5/16
+	 ip address 10.1.0.6/16
 	!
 	interface eth0
-	 ipv6 address 2001:3::2/64
-	 ip address 10.1.0.4/16
+	 ip address 10.1.0.5/16
 	!
     }
     canvas c1
-    iconcoords {311.0 483.0}
-    labelcoords {350.0 476.0}
+    iconcoords {253.0 477.0}
+    labelcoords {296.0 480.0}
     interface-peer {eth0 n2}
     interface-peer {eth1 n3}
     interface-peer {eth2 n6}
@@ -123,20 +108,18 @@ node n5 {
     network-config {
 	hostname n5
 	!
-	interface eth1
-	 ipv6 address 2001:8::2/64
-	 ip address 10.3.0.5/16
-	!
 	interface eth0
-	 ipv6 address 2001:6::2/64
-	 ip address 10.3.0.4/16
+	 ip address 10.3.0.1/16
+	!
+	interface eth1
+	 ip address 10.3.0.2/16
 	!
     }
     canvas c1
-    iconcoords {117.0 328.0}
-    labelcoords {92.0 316.0}
-    interface-peer {eth0 n3}
+    iconcoords {67.0 268.0}
+    labelcoords {52.0 249.0}
     interface-peer {eth1 n6}
+    interface-peer {eth0 n3}
 }
 
 node n6 {
@@ -146,28 +129,24 @@ node n6 {
 	hostname n6
 	!
 	interface eth3
-	 ipv6 address 2001:11::1/64
 	 ip address 10.3.0.6/16
 	!
 	interface eth2
-	 ipv6 address 2001:8::1/64
-	 ip address 10.3.0.3/16
+	 ip address 10.3.0.5/16
 	!
 	interface eth1
-	 ipv6 address 2001:7::2/64
-	 ip address 10.3.0.2/16
+	 ip address 10.3.0.4/16
 	!
 	interface eth0
-	 ipv6 address 2001:0::1/64
-	 ip address 10.3.0.1/16
+	 ip address 10.3.0.3/16
 	!
     }
     canvas c1
-    iconcoords {236.0 250.0}
-    labelcoords {230.0 232.0}
+    iconcoords {193.0 199.0}
+    labelcoords {180.0 182.0}
     interface-peer {eth0 n8}
-    interface-peer {eth1 n4}
-    interface-peer {eth2 n5}
+    interface-peer {eth1 n5}
+    interface-peer {eth2 n4}
     interface-peer {eth3 n7}
 }
 
@@ -178,29 +157,25 @@ node n7 {
 	hostname n7
 	!
 	interface eth3
-	 ipv6 address 2001:11::2/64
 	 ip address 10.2.0.4/16
 	!
 	interface eth2
-	 ipv6 address 2001:9::1/64
 	 ip address 10.2.0.3/16
 	!
 	interface eth1
-	 ipv6 address 2001:2::1/64
 	 ip address 10.2.0.2/16
 	!
 	interface eth0
-	 ipv6 address 2001:1::2/64
 	 ip address 10.2.0.1/16
 	!
     }
     canvas c1
-    iconcoords {665.0 282.0}
-    labelcoords {698.0 273.0}
+    iconcoords {736.0 219.0}
+    labelcoords {771.0 207.0}
     interface-peer {eth0 n8}
-    interface-peer {eth1 n2}
-    interface-peer {eth2 n1}
-    interface-peer {eth3 n6}
+    interface-peer {eth1 n1}
+    interface-peer {eth2 n6}
+    interface-peer {eth3 n2}
 }
 
 node n8 {
@@ -210,17 +185,15 @@ node n8 {
 	hostname n8
 	!
 	interface eth1
-	 ipv6 address 2001:1::1/64
 	 ip address 10.4.0.2/16
 	!
 	interface eth0
-	 ipv6 address 2001:0::2/64
 	 ip address 10.4.0.1/16
 	!
     }
     canvas c1
-    iconcoords {451.0 139.0}
-    labelcoords {451.0 118.0}
+    iconcoords {439.0 108.0}
+    labelcoords {421.0 91.0}
     interface-peer {eth0 n6}
     interface-peer {eth1 n7}
 }
@@ -232,19 +205,16 @@ node n9 {
 	hostname n9
 	!
 	interface eth1
-	 ipv6 address 2001:14::1/64
-	 ip address 10.0.0.8/16
+	 ip address 10.0.0.6/16
 	!
 	interface eth0
-	 ipv6 address 2001:12::2/64
 	 ip address 10.0.0.5/16
 	!
     }
     canvas c1
-    iconcoords {658.0 648.0}
-    labelcoords {658.0 680.0}
+    iconcoords {606.0 625.0}
+    labelcoords {606.0 657.0}
     interface-peer {eth0 n1}
-    services {RIP zebra IPForward}
     interface-peer {eth1 n10}
 }
 
@@ -255,20 +225,17 @@ node n10 {
 	hostname n10
 	!
 	interface eth1
-	 ipv6 address 2001:14::2/64
-	 ip address 10.0.0.7/16
+	 ip address 10.0.0.8/16
 	!
 	interface eth0
-	 ipv6 address 2001:13::2/64
-	 ip address 10.0.0.6/16
+	 ip address 10.0.0.7/16
 	!
     }
     canvas c1
-    iconcoords {842.0 586.0}
-    labelcoords {842.0 618.0}
-    interface-peer {eth0 n1}
-    services {RIP zebra IPForward}
-    interface-peer {eth1 n9}
+    iconcoords {812.0 568.0}
+    labelcoords {812.0 600.0}
+    interface-peer {eth0 n9}
+    interface-peer {eth1 n1}
 }
 
 link l1 {
@@ -282,52 +249,52 @@ link l2 {
 }
 
 link l3 {
-    nodes {n7 n2}
-    bandwidth 0
-}
-
-link l4 {
-    nodes {n2 n4}
-    bandwidth 0
-}
-
-link l5 {
-    nodes {n4 n3}
-    bandwidth 0
-}
-
-link l6 {
-    nodes {n3 n2}
-    bandwidth 0
-}
-
-link l7 {
-    nodes {n3 n5}
-    bandwidth 0
-}
-
-link l8 {
-    nodes {n4 n6}
-    bandwidth 0
-}
-
-link l9 {
-    nodes {n6 n5}
-    bandwidth 0
-}
-
-link l10 {
     nodes {n7 n1}
     bandwidth 0
 }
 
+link l4 {
+    nodes {n1 n2}
+    bandwidth 0
+}
+
+link l5 {
+    nodes {n2 n4}
+    bandwidth 0
+}
+
+link l6 {
+    nodes {n4 n3}
+    bandwidth 0
+}
+
+link l7 {
+    nodes {n3 n2}
+    bandwidth 0
+}
+
+link l9 {
+    nodes {n5 n6}
+    bandwidth 0
+}
+
+link l8 {
+    nodes {n3 n5}
+    bandwidth 0
+}
+
+link l10 {
+    nodes {n4 n6}
+    bandwidth 0
+}
+
 link l11 {
-    nodes {n2 n1}
+    nodes {n6 n7}
     bandwidth 0
 }
 
 link l12 {
-    nodes {n6 n7}
+    nodes {n7 n2}
     bandwidth 0
 }
 
@@ -337,22 +304,22 @@ link l13 {
 }
 
 link l14 {
-    nodes {n1 n10}
-    bandwidth 0
-}
-
-link l15 {
     nodes {n9 n10}
     bandwidth 0
 }
 
+link l15 {
+    nodes {n10 n1}
+    bandwidth 0
+}
+
 annotation a1 {
-    iconcoords {60.0 187.0 305.0 405.0}
+    iconcoords {22.0 87.0 299.0 351.0}
     type oval
     label {}
     labelcolor black
     fontfamily {Arial}
-    fontsize {12}
+    fontsize 12
     color #CFCFFF
     width 0
     border black
@@ -360,12 +327,12 @@ annotation a1 {
 }
 
 annotation a2 {
-    iconcoords {360.0 56.0 544.0 206.0}
+    iconcoords {335.0 12.0 556.0 176.0}
     type oval
     label {}
     labelcolor black
     fontfamily {Arial}
-    fontsize {12}
+    fontsize 12
     color #CFCFFF
     width 0
     border black
@@ -373,12 +340,12 @@ annotation a2 {
 }
 
 annotation a3 {
-    iconcoords {587.0 201.0 778.0 357.0}
+    iconcoords {610.0 132.0 829.0 340.0}
     type oval
     label {}
     labelcolor black
     fontfamily {Arial}
-    fontsize {12}
+    fontsize 12
     color #CFCFFF
     width 0
     border black
@@ -386,12 +353,12 @@ annotation a3 {
 }
 
 annotation a4 {
-    iconcoords {79.0 436.0 491.0 673.0}
+    iconcoords {506 452 852 699}
     type oval
     label {}
     labelcolor black
     fontfamily {Arial}
-    fontsize {12}
+    fontsize 12
     color #CFCFFF
     width 0
     border black
@@ -399,138 +366,138 @@ annotation a4 {
 }
 
 annotation a5 {
-    iconcoords {585.0 473.0 895.0 706.0}
+    iconcoords {10 419 410 659}
     type oval
     label {}
     labelcolor black
     fontfamily {Arial}
-    fontsize {12}
+    fontsize 12
     color #CFCFFF
     width 0
     border black
     canvas c1
 }
 
-annotation a6 {
-    iconcoords {190.0 627.0}
+annotation a8 {
     type text
-    label {AS 65100}
-    labelcolor #ff0000
-    fontfamily {Arial}
-    fontsize {12}
-    effects {bold}
-    canvas c1
-}
-
-annotation a7 {
-    type text
-    iconcoords {232.0 635.0}
+    iconcoords {743.0 670.0}
     label {}
     canvas c1
 }
 
-annotation a8 {
-    iconcoords {110.0 223.0}
-    type text
-    label {AS 65300}
-    labelcolor #ff0000
-    fontfamily {Arial}
-    fontsize {12}
-    effects {bold}
-    canvas c1
-}
-
-annotation a9 {
-    iconcoords {743.0 632.0}
-    type text
-    label {AS 65000}
-    labelcolor #ff0000
-    fontfamily {Arial}
-    fontsize {12}
-    effects {bold}
-    canvas c1
-}
-
-annotation a10 {
-    iconcoords {650.0 223.0}
-    type text
-    label {AS 65200}
-    labelcolor #ff0000
-    fontfamily {Arial}
-    fontsize {12}
-    effects {bold}
-    canvas c1
-}
-
 annotation a11 {
-    iconcoords {416.0 76.0}
+    iconcoords {404.0 30.0}
     type text
     label {AS 65400}
     labelcolor #ff0000
     fontfamily {Arial}
-    fontsize {12}
+    fontsize 12
     effects {bold}
     canvas c1
 }
 
 annotation a12 {
-    iconcoords {203.0 647.0}
+    iconcoords {410.0 50.0}
     type text
-    label {OSPF}
-    labelcolor #5bb900
+    label {Estático}
+    labelcolor #00b300
     fontfamily {Arial}
-    fontsize {12}
+    fontsize 12
     effects {bold}
     canvas c1
 }
 
 annotation a13 {
     type text
-    iconcoords {242.0 649.0}
+    iconcoords {715.0 172.0}
     label {}
     canvas c1
 }
 
-annotation a14 {
-    iconcoords {767.0 655.0}
+annotation a10 {
+    iconcoords {79.0 154.0}
     type text
-    label {RIP}
-    labelcolor #5bb900
+    label {Estático}
+    labelcolor #00b300
     fontfamily {Arial}
-    fontsize {12}
+    fontsize 12
+    effects {bold}
+    canvas c1
+}
+
+annotation a14 {
+    iconcoords {690.0 174.0}
+    type text
+    label {Estático}
+    labelcolor #00b300
+    fontfamily {Arial}
+    fontsize 12
     effects {bold}
     canvas c1
 }
 
 annotation a15 {
-    iconcoords {654.0 241.0}
+    iconcoords {686.0 155.0}
     type text
-    label {Estático}
-    labelcolor #5bb900
+    label {AS 65200}
+    labelcolor #ff0000
     fontfamily {Arial}
-    fontsize {12}
+    fontsize 12
+    effects {bold}
+    canvas c1
+}
+
+annotation a9 {
+    iconcoords {71.0 131.0}
+    type text
+    label {AS 65300}
+    labelcolor #ff0000
+    fontfamily {Arial}
+    fontsize 12
+    effects {bold}
+    canvas c1
+}
+
+annotation a6 {
+    iconcoords {147.0 592.0}
+    type text
+    label {AS 65100}
+    labelcolor #ff0000
+    fontfamily {Arial}
+    fontsize 12
+    effects {bold}
+    canvas c1
+}
+
+annotation a7 {
+    iconcoords {709.0 641.0}
+    type text
+    label {AS 65000}
+    labelcolor #ff0000
+    fontfamily {Arial}
+    fontsize 12
     effects {bold}
     canvas c1
 }
 
 annotation a16 {
-    iconcoords {421.0 94.0}
+    iconcoords {160.0 611.0}
     type text
-    label {Estático}
-    labelcolor #5bb900
+    label {OSPF}
+    labelcolor #00b300
     fontfamily {Arial}
-    fontsize {12}
+    fontsize 12
     effects {bold}
     canvas c1
 }
 
 annotation a17 {
-    iconcoords {114.0 242.0}
+    iconcoords {732.0 659.0}
     type text
-    label {Estático}
-    labelcolor #5bb900
+    label {RIP}
+    labelcolor #00b300
     fontfamily {Arial}
-    fontsize {12}
+    fontsize 12
     effects {bold}
     canvas c1
 }
