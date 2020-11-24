@@ -5,10 +5,10 @@ node n1 {
 	hostname n1
 	!
 	interface eth3
-	 ip address 10.0.0.4/16
+	 ip address 10.0.1.1/24
 	!
 	interface eth2
-	 ip address 10.0.0.3/16
+	 ip address 10.0.2.1/24
 	!
 	interface eth1
 	 ip address 10.0.0.2/16
@@ -45,11 +45,11 @@ node n1 {
 	  
 	!
 	interface eth2
-	  ip address 10.0.0.3/16
+	  ip address 10.0.2.1/24
 	  
 	!
 	interface eth3
-	  ip address 10.0.0.4/16
+	  ip address 10.0.1.1/24
 	  
 	!
 	!
@@ -64,7 +64,8 @@ node n1 {
 	! neighbor 1.2.3.4 remote-as 555
 	!
 	router rip
-	  network 10.0.0.0/16
+	  network 10.0.2.1/24
+	  network 10.0.1.1/24
 	!
 	
 	}
@@ -471,16 +472,20 @@ node n9 {
     network-config {
 	hostname n9
 	!
+	interface eth2
+	 ip address 10.0.4.1/24
+	 ipv6 address 2001:0::1/64
+	!
 	interface eth1
-	 ip address 10.0.0.6/16
+	 ip address 10.0.3.1/24
 	!
 	interface eth0
-	 ip address 10.0.0.5/16
+	 ip address 10.0.2.2/24
 	!
     }
     canvas c1
-    iconcoords {606.0 625.0}
-    labelcoords {606.0 657.0}
+    iconcoords {546.0 590.0}
+    labelcoords {546.0 622.0}
     interface-peer {eth0 n1}
     interface-peer {eth1 n10}
     services {RIP zebra IPForward}
@@ -496,17 +501,23 @@ node n9 {
 	custom-command /usr/local/etc/quagga/Quagga.conf
 	config {
 	interface eth0
-	  ip address 10.0.0.5/16
+	  ip address 10.0.2.2/24
 	!
 	interface eth1
-	  ip address 10.0.0.6/16
+	  ip address 10.0.3.1/24
+	!
+	interface eth2
+	  ip address 10.0.4.1/24
 	!
 	router rip
-	  network 10.0.0.0/16
+	  network 10.0.2.2/24
+	  network 10.0.3.1/24
+	  network 10.0.4.1/24
 	!
 	
 	}
     }
+    interface-peer {eth2 n11}
 }
 
 node n10 {
@@ -516,10 +527,10 @@ node n10 {
 	hostname n10
 	!
 	interface eth1
-	 ip address 10.0.0.8/16
+	 ip address 10.0.1.2/24
 	!
 	interface eth0
-	 ip address 10.0.0.7/16
+	 ip address 10.0.3.2/24
 	!
     }
     canvas c1
@@ -540,13 +551,51 @@ node n10 {
 	custom-command /usr/local/etc/quagga/Quagga.conf
 	config {
 	interface eth0
-	  ip address 10.0.0.7/16
+	  ip address 10.0.3.2/24
 	!
 	interface eth1
-	  ip address 10.0.0.8/16
+	  ip address 10.0.1.2/24
 	!
 	router rip
-	  network 10.0.0.0/16
+	  network 10.0.3.2/24
+	  network 10.0.1.2/24
+	!
+	
+	}
+    }
+}
+
+node n11 {
+    type router
+    model router
+    network-config {
+	hostname n11
+	!
+	interface eth0
+	 ip address 10.0.4.2/24
+	!
+    }
+    canvas c1
+    iconcoords {662.0 687.0}
+    labelcoords {662.0 719.0}
+    interface-peer {eth0 n9}
+    services {RIP zebra IPForward}
+    custom-config {
+	custom-config-id service:zebra
+	custom-command zebra
+	config {
+	files=('/usr/local/etc/quagga/Quagga.conf', 'quaggaboot.sh', '/usr/local/etc/quagga/vtysh.conf', )
+	}
+    }
+    custom-config {
+	custom-config-id service:zebra:/usr/local/etc/quagga/Quagga.conf
+	custom-command /usr/local/etc/quagga/Quagga.conf
+	config {
+	interface eth0
+	  ip address 10.0.4.2/24
+	!
+	router rip
+	  network 10.0.4.2/24
 	!
 	
 	}
@@ -628,6 +677,11 @@ link l15 {
     bandwidth 0
 }
 
+link l16 {
+    nodes {n9 n11}
+    bandwidth 0
+}
+
 annotation a1 {
     iconcoords {22.0 87.0 299.0 351.0}
     type oval
@@ -668,7 +722,7 @@ annotation a3 {
 }
 
 annotation a4 {
-    iconcoords {506 452 852 699}
+    iconcoords {456.0 452.0 852.0 737.0}
     type oval
     label {}
     labelcolor black
