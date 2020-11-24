@@ -717,7 +717,7 @@ annotation a12 {
     label {Estatico}
     labelcolor #00b300
     fontfamily {Arial}
-    fontsize 12
+    fontsize {12}
     effects {bold}
     canvas c1
 }
@@ -735,7 +735,7 @@ annotation a10 {
     label {Estatico}
     labelcolor #00b300
     fontfamily {Arial}
-    fontsize 12
+    fontsize {12}
     effects {bold}
     canvas c1
 }
@@ -746,7 +746,7 @@ annotation a14 {
     label {Estatico}
     labelcolor #00b300
     fontfamily {Arial}
-    fontsize 12
+    fontsize {12}
     effects {bold}
     canvas c1
 }
