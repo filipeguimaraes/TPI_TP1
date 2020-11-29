@@ -68,6 +68,7 @@ node n1 {
 	  redistribute connected
 	  redistribute rip
 	  neighbor 1.1.1.2 remote-as 65200
+	  neighbor 2.2.2.1 remote-as 65100
 	!
 	router rip
 	  network 10.0.2.1/24
@@ -115,6 +116,13 @@ node n2 {
     interface-peer {eth2 n3}
     interface-peer {eth3 n7}
     interface-peer {eth4 n13}
+    custom-config {
+	custom-config-id service:zebra
+	custom-command zebra
+	config {
+	files=('/usr/local/etc/quagga/Quagga.conf', 'quaggaboot.sh', '/usr/local/etc/quagga/vtysh.conf', )
+	}
+    }
     custom-config {
 	custom-config-id service:zebra:/usr/local/etc/quagga/Quagga.conf
 	custom-command /usr/local/etc/quagga/Quagga.conf
@@ -166,29 +174,22 @@ node n2 {
 	! along with this router's peers.
 	!
 	router bgp 65100
-	! neighbor 1.2.3.4 remote-as 555
+	  bgp router-id 2.2.2.1
+	  redistribute connected
+	  redistribute ospf
+	  neighbor 10.1.2.1 remote-as 65100
+	  neighbor 10.1.3.2 remote-as 65100
+	  neighbor 3.3.3.2 remote-as 65200
+	  neighbor 2.2.2.2 remote-as 65000
 	!
 	router ospf
 	  router-id 10.1.2.2
 	  network 10.1.2.2/24 area 0
 	  network 10.1.3.1/24 area 0
 	  network 10.1.5.1/24 area 0
+	  redistribute bgp
 	!
 	
-	}
-    }
-    custom-config {
-	custom-config-id service:zebra
-	custom-command zebra
-	config {
-	dirs=('/usr/local/etc/quagga', '/var/run/quagga')
-	files=('/usr/local/etc/quagga/Quagga.conf', 'quaggaboot.sh', '/usr/local/etc/quagga/vtysh.conf')
-	startidx=0
-	cmdup=('bash quaggaboot.sh zebra',)
-	cmddown=('killall zebra',)
-	cmdval=('pidof zebra',)
-	meta=None
-	starttime=0
 	}
     }
 }
@@ -224,6 +225,13 @@ node n3 {
     interface-peer {eth1 n2}
     interface-peer {eth2 n5}
     interface-peer {eth3 n12}
+    custom-config {
+	custom-config-id service:zebra
+	custom-command zebra
+	config {
+	files=('/usr/local/etc/quagga/Quagga.conf', 'quaggaboot.sh', '/usr/local/etc/quagga/vtysh.conf', )
+	}
+    }
     custom-config {
 	custom-config-id service:zebra:/usr/local/etc/quagga/Quagga.conf
 	custom-command /usr/local/etc/quagga/Quagga.conf
@@ -268,29 +276,19 @@ node n3 {
 	router bgp 65100
 	  bgp router-id 10.1.0.8
 	  redistribute connected
-	! neighbor 1.2.3.4 remote-as 555
+	  redistribute ospf
+	  neighbor 10.1.1.1 remote-as 65100
+	  neighbor 10.1.3.1 remote-as 65100
+	  neighbor 5.5.5.2 remote-as 65300
 	!
 	router ospf
 	  router-id 10.1.4.1
 	  network 10.1.1.2/24 area 0
 	  network 10.1.3.2/24 area 0
 	  network 10.1.4.1/24 area 0
+	  redistribute bgp
 	!
 	
-	}
-    }
-    custom-config {
-	custom-config-id service:zebra
-	custom-command zebra
-	config {
-	dirs=('/usr/local/etc/quagga', '/var/run/quagga')
-	files=('/usr/local/etc/quagga/Quagga.conf', 'quaggaboot.sh', '/usr/local/etc/quagga/vtysh.conf')
-	startidx=0
-	cmdup=('bash quaggaboot.sh zebra',)
-	cmddown=('killall zebra',)
-	cmdval=('pidof zebra',)
-	meta=None
-	starttime=0
 	}
     }
 }
@@ -321,6 +319,13 @@ node n4 {
     interface-peer {eth0 n2}
     interface-peer {eth1 n3}
     interface-peer {eth2 n6}
+    custom-config {
+	custom-config-id service:zebra
+	custom-command zebra
+	config {
+	files=('/usr/local/etc/quagga/Quagga.conf', 'quaggaboot.sh', '/usr/local/etc/quagga/vtysh.conf', )
+	}
+    }
     custom-config {
 	custom-config-id service:zebra:/usr/local/etc/quagga/Quagga.conf
 	custom-command /usr/local/etc/quagga/Quagga.conf
@@ -358,28 +363,18 @@ node n4 {
 	router bgp 65100
 	  bgp router-id 10.1.0.5
 	  redistribute connected
-	! neighbor 1.2.3.4 remote-as 555
+	  redistribute ospf
+	  neighbor 10.1.1.2 remote-as 65100
+	  neighbor 10.1.2.2 remote-as 65100
+	  neighbor 4.4.4.2 remote-as 65300
 	!
 	router ospf
 	  router-id 10.1.0.5
 	  network 10.1.1.1/24 area 0
 	  network 10.1.2.1/24 area 0
+	  redistribute bgp
 	!
 	
-	}
-    }
-    custom-config {
-	custom-config-id service:zebra
-	custom-command zebra
-	config {
-	dirs=('/usr/local/etc/quagga', '/var/run/quagga')
-	files=('/usr/local/etc/quagga/Quagga.conf', 'quaggaboot.sh', '/usr/local/etc/quagga/vtysh.conf')
-	startidx=0
-	cmdup=('bash quaggaboot.sh zebra',)
-	cmddown=('killall zebra',)
-	cmdval=('pidof zebra',)
-	meta=None
-	starttime=0
 	}
     }
 }
@@ -389,6 +384,9 @@ node n5 {
     model router
     network-config {
 	hostname n5
+	!
+	interface eth2
+	 ip address 10.3.2.1/24
 	!
 	interface eth0
 	 ip address 5.5.5.2/24
@@ -405,6 +403,46 @@ node n5 {
     services {BGP zebra IPForward}
     interface-peer {eth1 n6}
     interface-peer {eth0 n3}
+    interface-peer {eth2 n22}
+    custom-config {
+	custom-config-id service:zebra
+	custom-command zebra
+	config {
+	files=('/usr/local/etc/quagga/Quagga.conf', 'quaggaboot.sh', '/usr/local/etc/quagga/vtysh.conf', )
+	}
+    }
+    custom-config {
+	custom-config-id service:zebra:/usr/local/etc/quagga/Quagga.conf
+	custom-command /usr/local/etc/quagga/Quagga.conf
+	config {
+	interface eth0
+	  ip address 5.5.5.2/24
+	  
+	!
+	interface eth1
+	  ip address 10.3.1.1/24
+	  
+	!
+	interface eth2
+	  ip address 10.3.2.1/24
+	  
+	!
+	!
+	! BGP configuration
+	!
+	! You should configure the AS number below,
+	! along with this router's peers.
+	!
+	router bgp 65300
+	  bgp router-id 5.5.5.2
+	  redistribute connected
+	  neighbor 10.3.1.2 remote-as 65300
+	  neighbor 5.5.5.1 remote-as 65100
+	! 
+	!
+	
+	}
+    }
 }
 
 node n6 {
@@ -413,21 +451,18 @@ node n6 {
     network-config {
 	hostname n6
 	!
-	interface eth3
-	 ip address 7.7.7.1/24
-	 mac address 00:00:00:aa:00:14
-	!
 	interface eth2
 	 ip address 4.4.4.2/24
-	 mac address 00:00:00:aa:00:13
 	!
 	interface eth1
 	 ip address 10.3.1.2/24
-	 mac address 00:00:00:aa:00:0f
 	!
 	interface eth0
 	 ip address 6.6.6.1/24
-	 mac address 00:00:00:aa:00:00
+	!
+	interface eth3
+	 ip address 7.7.7.1/24
+	 mac address 00:00:00:aa:00:14
 	!
     }
     canvas c1
@@ -438,6 +473,50 @@ node n6 {
     interface-peer {eth1 n5}
     interface-peer {eth2 n4}
     interface-peer {eth3 n7}
+    custom-config {
+	custom-config-id service:zebra
+	custom-command zebra
+	config {
+	files=('/usr/local/etc/quagga/Quagga.conf', 'quaggaboot.sh', '/usr/local/etc/quagga/vtysh.conf', )
+	}
+    }
+    custom-config {
+	custom-config-id service:zebra:/usr/local/etc/quagga/Quagga.conf
+	custom-command /usr/local/etc/quagga/Quagga.conf
+	config {
+	interface eth0
+	  ip address 6.6.6.1/24
+	  
+	!
+	interface eth1
+	  ip address 10.3.1.2/24
+	  
+	!
+	interface eth2
+	  ip address 4.4.4.2/24
+	  
+	!
+	interface eth3
+	  ip address 7.7.7.1/24
+	  
+	!
+	!
+	! BGP configuration
+	!
+	! You should configure the AS number below,
+	! along with this router's peers.
+	!
+	router bgp 65300
+	  bgp router-id 6.6.6.1
+	  redistribute connected
+	  neighbor 10.3.1.1 remote-as 65300
+	  neighbor 4.4.4.1 remote-as 65100
+	  neighbor 6.6.6.2 remote-as 65400
+	  neighbor 7.7.7.2 remote-as 65200
+	!
+	
+	}
+    }
 }
 
 node n7 {
@@ -508,6 +587,9 @@ node n7 {
 	 network 1.1.1.0/24
 	 redistribute connected
 	 neighbor 1.1.1.1 remote-as 65000
+	 neighbor 3.3.3.1 remote-as 65100
+	 neighbor 7.7.7.1 remote-as 65300
+	 neighbor 8.8.8.1 remote-as 65400
 	!
 	 address-family ipv6
 	
@@ -528,6 +610,9 @@ node n8 {
     network-config {
 	hostname n8
 	!
+	interface eth2
+	 ip address 10.4.1.1/24
+	!
 	interface eth1
 	 ip address 8.8.8.1/24
 	 mac address 00:00:00:aa:00:02
@@ -543,6 +628,46 @@ node n8 {
     services {BGP zebra IPForward}
     interface-peer {eth0 n6}
     interface-peer {eth1 n7}
+    interface-peer {eth2 n21}
+    custom-config {
+	custom-config-id service:zebra
+	custom-command zebra
+	config {
+	files=('/usr/local/etc/quagga/Quagga.conf', 'quaggaboot.sh', '/usr/local/etc/quagga/vtysh.conf', )
+	}
+    }
+    custom-config {
+	custom-config-id service:zebra:/usr/local/etc/quagga/Quagga.conf
+	custom-command /usr/local/etc/quagga/Quagga.conf
+	config {
+	interface eth0
+	  ip address 6.6.6.2/24
+	  
+	!
+	interface eth1
+	  ip address 8.8.8.1/24
+	  
+	!
+	interface eth2
+	  ip address 10.4.1.1/24
+	  
+	!
+	!
+	! BGP configuration
+	!
+	! You should configure the AS number below,
+	! along with this router's peers.
+	!
+	router bgp 8
+	  bgp router-id 6.6.6.2
+	  redistribute connected
+	  neighbor 6.6.6.1 remote-as 65300
+	  neighbor 8.8.8.2 remote-as 65200
+	
+	!
+	
+	}
+    }
 }
 
 node n9 {
@@ -573,6 +698,13 @@ node n9 {
     interface-peer {eth1 n10}
     interface-peer {eth2 n11}
     custom-config {
+	custom-config-id service:zebra
+	custom-command zebra
+	config {
+	files=('/usr/local/etc/quagga/Quagga.conf', 'quaggaboot.sh', '/usr/local/etc/quagga/vtysh.conf', )
+	}
+    }
+    custom-config {
 	custom-config-id service:zebra:/usr/local/etc/quagga/Quagga.conf
 	custom-command /usr/local/etc/quagga/Quagga.conf
 	config {
@@ -589,22 +721,9 @@ node n9 {
 	  network 10.0.2.2/24
 	  network 10.0.3.1/24
 	  network 10.0.4.1/24
+	  redistribute connected
 	!
 	
-	}
-    }
-    custom-config {
-	custom-config-id service:zebra
-	custom-command zebra
-	config {
-	dirs=('/usr/local/etc/quagga', '/var/run/quagga')
-	files=('/usr/local/etc/quagga/Quagga.conf', 'quaggaboot.sh', '/usr/local/etc/quagga/vtysh.conf')
-	startidx=0
-	cmdup=('bash quaggaboot.sh zebra',)
-	cmddown=('killall zebra',)
-	cmdval=('pidof zebra',)
-	meta=None
-	starttime=0
 	}
     }
 }
@@ -675,8 +794,8 @@ node n11 {
 	!
     }
     canvas c1
-    iconcoords {1226.0 803.0}
-    labelcoords {1226.0 835.0}
+    iconcoords {1206.0 789.0}
+    labelcoords {1206.0 821.0}
     services {RIP zebra IPForward}
     interface-peer {eth0 n9}
     custom-config {
@@ -1132,6 +1251,38 @@ node n20 {
     interface-peer {eth0 n7}
 }
 
+node n21 {
+    type router
+    model host
+    network-config {
+	hostname n21
+	!
+	interface eth0
+	 ip address 10.4.1.2/24
+	!
+    }
+    canvas c1
+    iconcoords {633.0 37.0}
+    labelcoords {633.0 69.0}
+    interface-peer {eth0 n8}
+}
+
+node n22 {
+    type router
+    model host
+    network-config {
+	hostname n22
+	!
+	interface eth0
+	 ip address 10.3.2.2/24
+	!
+    }
+    canvas c1
+    iconcoords {173.0 109.0}
+    labelcoords {173.0 141.0}
+    interface-peer {eth0 n5}
+}
+
 link l1 {
     nodes {n6 n8}
 }
@@ -1234,6 +1385,16 @@ link l25 {
 
 link l26 {
     nodes {n7 n20}
+    bandwidth 0
+}
+
+link l27 {
+    nodes {n22 n5}
+    bandwidth 0
+}
+
+link l28 {
+    nodes {n21 n8}
     bandwidth 0
 }
 
@@ -1545,7 +1706,7 @@ annotation a3 {
 }
 
 annotation a4 {
-    iconcoords {594.0 0.0 858.0 157.0}
+    iconcoords {574.0 0.0 858.0 157.0}
     type oval
     label {}
     labelcolor black
@@ -1571,7 +1732,7 @@ annotation a5 {
 }
 
 annotation a2 {
-    iconcoords {232.0 380.0 705.0 651.0}
+    iconcoords {230 376 705 649}
     type oval
     label {}
     labelcolor black
