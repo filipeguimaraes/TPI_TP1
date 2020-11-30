@@ -45,7 +45,7 @@ node n1 {
 	  
 	!
 	interface eth1
-	  ip address 2.2.2.2/16
+	  ip address 2.2.2.2/24
 	  
 	!
 	interface eth2
