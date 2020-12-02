@@ -285,6 +285,9 @@ node n3 {
 	  neighbor 10.1.1.1 remote-as 65100
 	  neighbor 10.1.3.1 remote-as 65100
 	  neighbor 5.5.5.2 remote-as 65300
+	  neighbor 5.5.5.2 distribute-list 1 in
+	  access-list 1 deny 10.3.0.0 0.0.255.255
+	  access-list 1 permit 0.0.0.0 255.255.255.255
 	!
 	router ospf
 	  router-id 10.1.4.1
@@ -372,6 +375,9 @@ node n4 {
 	  neighbor 10.1.1.2 remote-as 65100
 	  neighbor 10.1.2.2 remote-as 65100
 	  neighbor 4.4.4.2 remote-as 65300
+	  neighbor 4.4.4.2 distribute-list 1 in
+	  access-list 1 deny 10.3.0.0 0.0.255.255
+	  access-list 1 permit 0.0.0.0 255.255.255.255
 	!
 	router ospf
 	  router-id 10.1.0.5
@@ -471,8 +477,8 @@ node n6 {
 	!
     }
     canvas c1
-    iconcoords {380.0 179.0}
-    labelcoords {380.0 211.0}
+    iconcoords {379.0 179.0}
+    labelcoords {379.0 211.0}
     services {BGP zebra IPForward}
     interface-peer {eth0 n8}
     interface-peer {eth1 n5}
@@ -663,7 +669,7 @@ node n8 {
 	! You should configure the AS number below,
 	! along with this router's peers.
 	!
-	router bgp 8
+	router bgp 65400
 	  bgp router-id 6.6.6.2
 	  redistribute connected
 	  neighbor 6.6.6.1 remote-as 65300
