@@ -69,12 +69,7 @@ node n1 {
 	  redistribute rip
 	  neighbor 1.1.1.2 remote-as 65200
 	  neighbor 2.2.2.1 remote-as 65100
-	  neighbor 2.2.2.1 route-map teste in
 	!
-	  route-map teste permit 10
-	   set as-path prepend 65000 65000
-	!
-	
 	router rip
 	  network 10.0.2.1/24
 	  network 10.0.1.1/24
@@ -180,6 +175,7 @@ node n2 {
 	!
 	router bgp 65100
 	  bgp router-id 2.2.2.1
+	  network 10.3.0.0/16
 	  redistribute connected
 	  redistribute ospf
 	  neighbor 10.1.2.1 remote-as 65100
@@ -280,14 +276,15 @@ node n3 {
 	!
 	router bgp 65100
 	  bgp router-id 10.1.0.8
+	  network 10.1.0.0/16
 	  redistribute connected
 	  redistribute ospf
 	  neighbor 10.1.1.1 remote-as 65100
 	  neighbor 10.1.3.1 remote-as 65100
 	  neighbor 5.5.5.2 remote-as 65300
-	  neighbor 5.5.5.2 distribute-list 1 in
-	  access-list 1 deny 10.3.0.0 0.0.255.255
-	  access-list 1 permit 0.0.0.0 255.255.255.255
+	  !neighbor 5.5.5.2 distribute-list 1 in
+	  !access-list 1 deny 10.3.0.0 0.0.255.255
+	  !access-list 1 permit 0.0.0.0 255.255.255.255
 	!
 	router ospf
 	  router-id 10.1.4.1
@@ -370,14 +367,15 @@ node n4 {
 	!
 	router bgp 65100
 	  bgp router-id 10.1.0.5
+	  network 10.3.0.0/16
 	  redistribute connected
 	  redistribute ospf
 	  neighbor 10.1.1.2 remote-as 65100
 	  neighbor 10.1.2.2 remote-as 65100
 	  neighbor 4.4.4.2 remote-as 65300
-	  neighbor 4.4.4.2 distribute-list 1 in
-	  access-list 1 deny 10.3.0.0 0.0.255.255
-	  access-list 1 permit 0.0.0.0 255.255.255.255
+	  !neighbor 4.4.4.2 distribute-list 1 in
+	  !access-list 1 deny 10.3.0.0 0.0.255.255
+	  !access-list 1 permit 0.0.0.0 255.255.255.255
 	!
 	router ospf
 	  router-id 10.1.0.5
@@ -446,7 +444,9 @@ node n5 {
 	!
 	router bgp 65300
 	  bgp router-id 5.5.5.2
+	  network 10.3.0.0/16
 	  redistribute connected
+	  redistribute static
 	  neighbor 10.3.1.2 remote-as 65300
 	  neighbor 5.5.5.1 remote-as 65100
 	! 
@@ -461,6 +461,9 @@ node n6 {
     model router
     network-config {
 	hostname n6
+	!
+	interface eth4
+	 ip address 10.3.3.1/24
 	!
 	interface eth2
 	 ip address 4.4.4.2/24
@@ -509,6 +512,10 @@ node n6 {
 	!
 	interface eth3
 	  ip address 7.7.7.1/24
+	 
+	!
+	interface eth34
+	  ip address 10.3.3.1/24
 	  
 	!
 	!
@@ -519,7 +526,9 @@ node n6 {
 	!
 	router bgp 65300
 	  bgp router-id 6.6.6.1
+	  network 10.3.0.0/16
 	  redistribute connected
+	  redistribute static
 	  neighbor 10.3.1.1 remote-as 65300
 	  neighbor 4.4.4.1 remote-as 65100
 	  neighbor 6.6.6.2 remote-as 65400
@@ -528,6 +537,7 @@ node n6 {
 	
 	}
     }
+    interface-peer {eth4 n23}
 }
 
 node n7 {
@@ -537,7 +547,7 @@ node n7 {
 	hostname n7
 	!
 	interface eth4
-	 ip address 10.2.0.1/24
+	 ip address 10.2.1.1/24
 	!
 	interface eth3
 	 ip address 3.3.3.2/24
@@ -591,12 +601,17 @@ node n7 {
 	interface eth3
 	 ip address 3.3.3.2/24
 	!
+	!
+	interface eth4
+	 ip address 10.2.1.1/24
+	!
 	interface lo
 	!
 	router bgp 65200
 	 bgp router-id 1.1.1.2
-	 network 1.1.1.0/24
+	 network 10.2.0.0/16
 	 redistribute connected
+	 redistribute static
 	 neighbor 1.1.1.1 remote-as 65000
 	 neighbor 3.3.3.1 remote-as 65100
 	 neighbor 7.7.7.1 remote-as 65300
@@ -671,7 +686,9 @@ node n8 {
 	!
 	router bgp 65400
 	  bgp router-id 6.6.6.2
+	  network 10.4.0.0/16
 	  redistribute connected
+	  redistribute static
 	  neighbor 6.6.6.1 remote-as 65300
 	  neighbor 8.8.8.2 remote-as 65200
 	
@@ -1253,13 +1270,14 @@ node n20 {
 	hostname n20
 	!
 	interface eth0
-	 ip address 10.2.0.2/24
+	 ip address 10.2.1.2/24
 	!
     }
     canvas c1
     iconcoords {1375.0 169.0}
     labelcoords {1375.0 201.0}
     interface-peer {eth0 n7}
+    services {DefaultRoute SSH}
 }
 
 node n21 {
@@ -1273,8 +1291,8 @@ node n21 {
 	!
     }
     canvas c1
-    iconcoords {633.0 37.0}
-    labelcoords {633.0 69.0}
+    iconcoords {633.0 38.0}
+    labelcoords {633.0 70.0}
     interface-peer {eth0 n8}
 }
 
@@ -1292,6 +1310,22 @@ node n22 {
     iconcoords {173.0 109.0}
     labelcoords {173.0 141.0}
     interface-peer {eth0 n5}
+}
+
+node n23 {
+    type router
+    model host
+    network-config {
+	hostname n23
+	!
+	interface eth0
+	 ip address 10.3.3.2/24
+	!
+    }
+    canvas c1
+    iconcoords {385.0 85.0}
+    labelcoords {385.0 117.0}
+    interface-peer {eth0 n6}
 }
 
 link l1 {
@@ -1406,6 +1440,11 @@ link l27 {
 
 link l28 {
     nodes {n21 n8}
+    bandwidth 0
+}
+
+link l29 {
+    nodes {n23 n6}
     bandwidth 0
 }
 
@@ -1717,7 +1756,7 @@ annotation a3 {
 }
 
 annotation a4 {
-    iconcoords {574.0 0.0 858.0 157.0}
+    iconcoords {571 3 857 162}
     type oval
     label {}
     labelcolor black
@@ -1769,7 +1808,7 @@ annotation a30 {
 }
 
 annotation a34 {
-    iconcoords {46.0 609.0 288.0 883.0}
+    iconcoords {27 563 279 847}
     type oval
     label {}
     labelcolor black
@@ -1795,7 +1834,7 @@ annotation a35 {
 }
 
 annotation a36 {
-    iconcoords {287.66666666666674 177.33333333333331}
+    iconcoords {295.66666666666674 173.33333333333331}
     type text
     label {i-BGP}
     labelcolor #bc7b44
