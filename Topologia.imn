@@ -4,26 +4,26 @@ node n1 {
     network-config {
 	hostname n1
 	!
+	interface eth2
+	 ip address 10.0.2.1/24
+	 mac address 00:00:00:00:00:00
+	!
+	interface eth1
+	 ip address 2.2.2.2/24
+	 mac address 00:00:00:00:00:00
+	!
+	interface eth0
+	 ip address 1.1.1.1/24
+	 mac address 00:00:00:00:00:00
+	!
 	interface eth3
 	 ip address 10.0.1.1/24
 	 mac address 00:00:00:aa:00:1d
 	!
-	interface eth2
-	 ip address 10.0.2.1/24
-	 mac address 00:00:00:aa:00:18
-	!
-	interface eth1
-	 ip address 2.2.2.2/24
-	 mac address 00:00:00:aa:00:06
-	!
-	interface eth0
-	 ip address 1.1.1.1/24
-	 mac address 00:00:00:aa:00:05
-	!
     }
     canvas c1
-    iconcoords {1165.0 584.0}
-    labelcoords {1165.0 616.0}
+    iconcoords {1159.0 584.0}
+    labelcoords {1159.0 616.0}
     services {BGP RIP zebra IPForward}
     interface-peer {eth0 n7}
     interface-peer {eth1 n2}
@@ -46,6 +46,7 @@ node n1 {
 	
 	interface eth0
 	  ip address 1.1.1.1/24
+	
 	  
 	!
 	interface eth1
@@ -98,23 +99,23 @@ node n2 {
 	!
 	interface eth4
 	 ip address 10.1.5.1/24
-	 mac address 00:00:00:aa:00:25
+	 mac address 00:00:00:00:00:00
 	!
 	interface eth3
 	 ip address 3.3.3.1/24
-	 mac address 00:00:00:aa:00:17
+	 mac address 00:00:00:00:00:00
 	!
 	interface eth2
 	 ip address 10.1.3.1/24
-	 mac address 00:00:00:aa:00:0d
+	 mac address 00:00:00:00:00:00
 	!
 	interface eth1
 	 ip address 10.1.2.2/24
-	 mac address 00:00:00:aa:00:08
+	 mac address 00:00:00:00:00:00
 	!
 	interface eth0
 	 ip address 2.2.2.1/24
-	 mac address 00:00:00:aa:00:07
+	 mac address 00:00:00:00:00:00
 	!
     }
     canvas c1
@@ -188,7 +189,7 @@ node n2 {
 	!
 	router bgp 65100
 	  bgp router-id 2.2.2.1
-	  network 10.3.0.0/16
+	  network 10.1.0.0/16
 	  redistribute connected
 	  redistribute ospf
 	  neighbor 10.1.2.1 remote-as 65100
@@ -342,20 +343,20 @@ node n4 {
 	!
 	interface eth2
 	 ip address 4.4.4.1/24
-	 mac address 00:00:00:aa:00:12
+	 mac address 00:00:00:00:00:00
 	!
 	interface eth1
 	 ip address 10.1.1.1/24
-	 mac address 00:00:00:aa:00:0a
+	 mac address 00:00:00:00:00:00
 	!
 	interface eth0
 	 ip address 10.1.2.1/24
-	 mac address 00:00:00:aa:00:09
+	 mac address 00:00:00:00:00:00
 	!
     }
     canvas c1
-    iconcoords {515.0 425.0}
-    labelcoords {515.0 457.0}
+    iconcoords {515.0 426.0}
+    labelcoords {515.0 458.0}
     services {BGP OSPFv2 zebra IPForward}
     interface-peer {eth0 n2}
     interface-peer {eth1 n3}
@@ -509,6 +510,9 @@ node n6 {
     network-config {
 	hostname n6
 	!
+	interface eth3
+	 ip address 7.7.7.1/24
+	!
 	interface eth4
 	 ip address 10.3.3.1/24
 	!
@@ -520,10 +524,6 @@ node n6 {
 	!
 	interface eth0
 	 ip address 6.6.6.1/24
-	!
-	interface eth3
-	 ip address 7.7.7.1/24
-	 mac address 00:00:00:aa:00:14
 	!
     }
     canvas c1
@@ -642,6 +642,7 @@ node n7 {
 	!
 	interface eth1
 	 ip address 1.1.1.2/24
+	
 	!
 	interface eth2
 	 ip address 7.7.7.2/24
@@ -889,8 +890,8 @@ node n11 {
 	!
     }
     canvas c1
-    iconcoords {1209.0 788.0}
-    labelcoords {1209.0 820.0}
+    iconcoords {1206.0 788.0}
+    labelcoords {1206.0 820.0}
     services {RIP zebra IPForward}
     interface-peer {eth0 n9}
     custom-config {
@@ -1410,8 +1411,8 @@ node n20 {
 	!
     }
     canvas c1
-    iconcoords {1375.0 169.0}
-    labelcoords {1375.0 201.0}
+    iconcoords {1376.0 169.0}
+    labelcoords {1376.0 201.0}
     interface-peer {eth0 n7}
     services {DefaultRoute SSH}
 }
@@ -1443,8 +1444,8 @@ node n22 {
 	!
     }
     canvas c1
-    iconcoords {173.0 109.0}
-    labelcoords {173.0 141.0}
+    iconcoords {157.0 129.0}
+    labelcoords {157.0 161.0}
     interface-peer {eth0 n5}
 }
 
@@ -1957,7 +1958,7 @@ annotation a34 {
 }
 
 annotation a35 {
-    iconcoords {10 353 794 979}
+    iconcoords {47 334 833 962}
     type oval
     label {}
     labelcolor black
