@@ -344,8 +344,8 @@ node n4 {
 	!
     }
     canvas c1
-    iconcoords {515.0 425.0}
-    labelcoords {515.0 457.0}
+    iconcoords {513.0 427.0}
+    labelcoords {513.0 459.0}
     services {BGP OSPFv2 zebra IPForward}
     interface-peer {eth0 n2}
     interface-peer {eth1 n3}
@@ -514,8 +514,8 @@ node n6 {
 	!
     }
     canvas c1
-    iconcoords {379.0 179.0}
-    labelcoords {379.0 211.0}
+    iconcoords {379.0 180.0}
+    labelcoords {379.0 212.0}
     services {BGP zebra IPForward}
     interface-peer {eth0 n8}
     interface-peer {eth1 n5}
