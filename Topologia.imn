@@ -78,7 +78,16 @@ node n1 {
 	  neighbor 1.1.1.2 remote-as 65200
 	  neighbor 1.1.1.2 password c0$ta
 	  neighbor 2.2.2.1 remote-as 65100
+	  neighbor 2.2.2.1 route-map LOCAL-PREF in
 	  neighbor 2.2.2.1 password c0$ta
+	!
+	route-map LOCAL-PREF permit 10
+	  match ip address prefix-list MATCH
+	  set local-preference 200
+	!
+	route-map LOCAL-PREF permit 20
+	!
+	ip prefix-list MATCH permit 10.1.0.0/16
 	!
 	router rip
 	  network 10.0.2.1/24
@@ -193,6 +202,7 @@ node n2 {
 	  redistribute ospf
 	  neighbor 3.3.3.2 remote-as 65200
 	  neighbor 3.3.3.2 password c0$ta
+	  neighbor 3.3.3.2 route-map LOCAL-PREF in
 	  neighbor 2.2.2.2 remote-as 65000
 	  neighbor 2.2.2.2 password c0$ta
 	  neighbor 10.1.2.1 remote-as 65100
@@ -200,14 +210,34 @@ node n2 {
 	  neighbor 10.1.2.1 next-hop-self
 	  neighbor 10.1.2.1 route-map no_export out
 	  neighbor 10.1.2.1 send-community
+	  neighbor 10.1.2.1 route-map LOCAL-PREF in
 	  neighbor 10.1.3.2 remote-as 65100
 	  neighbor 10.1.3.2 password c0$ta
 	  neighbor 10.1.3.2 next-hop-self
 	  neighbor 10.1.3.2 route-map no_export out
 	  neighbor 10.1.3.2 send-community
+	  neighbor 10.1.3.1 route-map LOCAL-PREF in
 	!
 	route-map no_export 
 	  set community no-export
+	!
+	route-map LOCAL-PREF permit 10
+	 match ip address prefix-list as65200
+	 set local-preference 200
+	!
+	route-map LOCAL-PREF permit 20
+	 match ip address prefix-list as65300
+	 set local-preference 200
+	!
+	route-map LOCAL-PREF permit 30
+	 match ip address prefix-list as65400
+	 set local-preference 200
+	!
+	route-map LOCAL-PREF permit 40
+	!
+	ip prefix-list as65200 permit 10.2.0.0/16
+	ip prefix-list as65300 permit 10.3.0.0/16  
+	ip prefix-list as65400 permit 10.4.0.0/16 
 	!
 	router ospf
 	  router-id 10.1.2.2
@@ -319,11 +349,31 @@ node n3 {
 	  neighbor 10.1.3.1 next-hop-self
 	  neighbor 10.1.3.1 route-map no_export out
 	  neighbor 10.1.3.1 send-community
+	  neighbor 10.1.3.1 route-map LOCAL-PREF in
 	  neighbor 5.5.5.2 remote-as 65300
 	  neighbor 5.5.5.2 password c0$ta
+	  neighbor 5.5.5.2 route-map LOCAL-PREF in
 	!
 	route-map no_export
 	  set community no-export
+	!
+	route-map LOCAL-PREF permit 10
+	 match ip address prefix-list as65200
+	 set local-preference 200
+	!
+	route-map LOCAL-PREF permit 20
+	 match ip address prefix-list as65300
+	 set local-preference 200
+	!
+	route-map LOCAL-PREF permit 30
+	 match ip address prefix-list as65400
+	 set local-preference 200
+	!
+	route-map LOCAL-PREF permit 40
+	!
+	ip prefix-list as65200 permit 10.2.0.0/16
+	ip prefix-list as65300 permit 10.3.0.0/16
+	ip prefix-list as65400 permit 10.4.0.0/16
 	!
 	router ospf
 	  router-id 10.1.4.1
@@ -420,12 +470,33 @@ node n4 {
 	  neighbor 10.1.2.2 password c0$ta
 	  neighbor 10.1.2.2 next-hop-self
 	  neighbor 10.1.2.2 route-map no_export out
+	  neighbor 10.1.2.2 route-map LOCAL-PREF in
 	  neighbor 10.1.2.2 send-community
 	  neighbor 4.4.4.2 remote-as 65300
 	  neighbor 4.4.4.2 password c0$ta
+	  neighbor 4.4.4.2 route-map LOCAL-PREF in 
 	!
 	route-map no_export
 	  set community no-export
+	!
+	route-map LOCAL-PREF permit 10
+	 match ip address prefix-list as65200
+	 set local-preference 200
+	!
+	route-map LOCAL-PREF permit 20
+	 match ip address prefix-list as65300
+	 set local-preference 200
+	!
+	route-map LOCAL-PREF permit 30
+	 match ip address prefix-list as65400
+	 set local-preference 200
+	!
+	route-map LOCAL-PREF permit 40
+	!
+	ip prefix-list as65200 permit 10.2.0.0/16
+	ip prefix-list as65400 permit 10.3.0.0/16
+	ip prefix-list as65400 permit 10.4.0.0/16
+	!
 	router ospf
 	  router-id 10.1.0.5
 	  network 10.1.1.1/24 area 0
