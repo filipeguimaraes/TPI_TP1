@@ -187,18 +187,27 @@ node n2 {
 	! along with this router's peers.
 	!
 	router bgp 65100
-	  bgp router-id 2.2.2.1
-	  network 10.3.0.0/16
+	  bgp router-id 10.1.2.2
+	  network 10.1.0.0/16
 	  redistribute connected
 	  redistribute ospf
-	  neighbor 10.1.2.1 remote-as 65100
-	  neighbor 10.1.2.1 password c0$ta
-	  neighbor 10.1.3.2 remote-as 65100
-	  neighbor 10.1.3.2 password c0$ta
 	  neighbor 3.3.3.2 remote-as 65200
 	  neighbor 3.3.3.2 password c0$ta
 	  neighbor 2.2.2.2 remote-as 65000
 	  neighbor 2.2.2.2 password c0$ta
+	  neighbor 10.1.2.1 remote-as 65100
+	  neighbor 10.1.2.1 password c0$ta
+	  neighbor 10.1.2.1 next-hop-self
+	  neighbor 10.1.2.1 route-map no_export out
+	  neighbor 10.1.2.1 send-community
+	  neighbor 10.1.3.2 remote-as 65100
+	  neighbor 10.1.3.2 password c0$ta
+	  neighbor 10.1.3.2 next-hop-self
+	  neighbor 10.1.3.2 route-map no_export out
+	  neighbor 10.1.3.2 send-community
+	!
+	route-map no_export 
+	  set community no-export
 	!
 	router ospf
 	  router-id 10.1.2.2
@@ -208,7 +217,6 @@ node n2 {
 	  redistribute bgp
 	  area 0 authentication message-digest 
 	!
-	
 	}
     }
 }
@@ -303,13 +311,19 @@ node n3 {
 	  redistribute ospf
 	  neighbor 10.1.1.1 remote-as 65100
 	  neighbor 10.1.1.1 password c0$ta
+	  neighbor 10.1.1.1 next-hop-self
+	  neighbor 10.1.1.1 route-map no_export out
+	  neighbor 10.1.1.1 send-community
 	  neighbor 10.1.3.1 remote-as 65100
 	  neighbor 10.1.3.1 password c0$ta
+	  neighbor 10.1.3.1 next-hop-self
+	  neighbor 10.1.3.1 route-map no_export out
+	  neighbor 10.1.3.1 send-community
 	  neighbor 5.5.5.2 remote-as 65300
 	  neighbor 5.5.5.2 password c0$ta
-	  !neighbor 5.5.5.2 distribute-list 1 in
-	  !access-list 1 deny 10.3.0.0 0.0.255.255
-	  !access-list 1 permit 0.0.0.0 255.255.255.255
+	!
+	route-map no_export
+	  set community no-export
 	!
 	router ospf
 	  router-id 10.1.4.1
@@ -319,7 +333,6 @@ node n3 {
 	  redistribute bgp
 	  area 0 authentication message-digest 
 	!
-	
 	}
     }
 }
@@ -400,14 +413,19 @@ node n4 {
 	  redistribute ospf
 	  neighbor 10.1.1.2 remote-as 65100
 	  neighbor 10.1.1.2 password c0$ta
+	  neighbor 10.1.1.2 next-hop-self
+	  neighbor 10.1.1.2 route-map no_export out
+	  neighbor 10.1.1.2 send-community
 	  neighbor 10.1.2.2 remote-as 65100
 	  neighbor 10.1.2.2 password c0$ta
+	  neighbor 10.1.2.2 next-hop-self
+	  neighbor 10.1.2.2 route-map no_export out
+	  neighbor 10.1.2.2 send-community
 	  neighbor 4.4.4.2 remote-as 65300
 	  neighbor 4.4.4.2 password c0$ta
-	  !neighbor 4.4.4.2 distribute-list 1 in
-	  !access-list 1 deny 10.3.0.0 0.0.255.255
-	  !access-list 1 permit 0.0.0.0 255.255.255.255
 	!
+	route-map no_export
+	  set community no-export
 	router ospf
 	  router-id 10.1.0.5
 	  network 10.1.1.1/24 area 0
@@ -415,7 +433,6 @@ node n4 {
 	  redistribute bgp
 	  area 0 authentication message-digest 
 	!
-	
 	}
     }
 }
@@ -466,7 +483,6 @@ node n5 {
 	!
 	interface eth2
 	  ip address 10.3.2.1/24
-	  
 	!
 	!
 	! BGP configuration
@@ -481,6 +497,7 @@ node n5 {
 	  redistribute static
 	  neighbor 10.3.1.2 remote-as 65300
 	  neighbor 10.3.1.2 password c0$ta
+	  neighbor 10.3.1.2 next-hop-self
 	  neighbor 5.5.5.1 remote-as 65100
 	  neighbor 5.5.5.1 password c0$ta
 	! 
@@ -565,6 +582,7 @@ node n6 {
 	  redistribute static
 	  neighbor 10.3.1.1 remote-as 65300
 	  neighbor 10.3.1.1 password c0$ta
+	  neighbor 10.3.1.1 next-hop-self
 	  neighbor 4.4.4.1 remote-as 65100
 	  neighbor 4.4.4.1 password c0$ta
 	  neighbor 6.6.6.2 remote-as 65400
@@ -1433,8 +1451,8 @@ node n22 {
 	!
     }
     canvas c1
-    iconcoords {173.0 109.0}
-    labelcoords {173.0 141.0}
+    iconcoords {174.0 108.0}
+    labelcoords {174.0 140.0}
     interface-peer {eth0 n5}
 }
 
@@ -1947,7 +1965,7 @@ annotation a34 {
 }
 
 annotation a35 {
-    iconcoords {10 353 794 979}
+    iconcoords {6 348 792 976}
     type oval
     label {}
     labelcolor black
