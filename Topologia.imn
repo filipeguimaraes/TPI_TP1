@@ -853,6 +853,13 @@ node n8 {
 	  neighbor 6.6.6.1 password c0$ta
 	  neighbor 8.8.8.2 remote-as 65200
 	  neighbor 8.8.8.2 password c0$ta
+	  neighbor 8.8.8.2 route-map penaliza out
+	!
+	access-list 1 permit 10.1.0.0/16
+	!
+	route-map penaliza permit 10
+	  match ip address 1
+	  set as-path prepend 65400 65400
 	!
 	}
     }
