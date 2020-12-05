@@ -22,8 +22,8 @@ node n1 {
 	!
     }
     canvas c1
-    iconcoords {1165.0 584.0}
-    labelcoords {1165.0 616.0}
+    iconcoords {1163.0 579.0}
+    labelcoords {1163.0 611.0}
     services {BGP RIP zebra IPForward}
     interface-peer {eth0 n7}
     interface-peer {eth1 n2}
@@ -761,12 +761,21 @@ node n7 {
 	 redistribute static
 	 neighbor 1.1.1.1 remote-as 65000
 	 neighbor 1.1.1.1 password c0$ta
+	 neighbor 1.1.1.1 route-map LOCAL-PREF in
 	 neighbor 3.3.3.1 remote-as 65100
 	 neighbor 3.3.3.1 password c0$ta
 	 neighbor 7.7.7.1 remote-as 65300
 	 neighbor 7.7.7.1 password c0$ta
 	 neighbor 8.8.8.1 remote-as 65400
 	 neighbor 8.8.8.1 password c0$ta
+	!
+	route-map LOCAL-PREF permit 10
+	  match ip address prefix-list as65000
+	  set local-preference 200
+	!
+	route-map LOCAL-PREF permit 20
+	!
+	ip prefix-list as65000 permit 10.0.0.0/16
 	!
 	 address-family ipv6
 	
@@ -844,9 +853,7 @@ node n8 {
 	  neighbor 6.6.6.1 password c0$ta
 	  neighbor 8.8.8.2 remote-as 65200
 	  neighbor 8.8.8.2 password c0$ta
-	
 	!
-	
 	}
     }
 }
