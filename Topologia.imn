@@ -363,7 +363,11 @@ node n3 {
 	  neighbor 10.1.3.1 send-community
 	  neighbor 5.5.5.2 remote-as 65300
 	  neighbor 5.5.5.2 password c0$ta
+	  neighbor 5.5.5.2 filter-list 1 out
 	  neighbor 5.5.5.2 route-map rm65300 in
+	!
+	ip as-path access-list 1 deny _65000_
+	ip as-path access-list 1 permit .*
 	!
 	route-map no_export
 	  set community no-export
@@ -490,7 +494,11 @@ node n4 {
 	  neighbor 10.1.2.2 send-community
 	  neighbor 4.4.4.2 remote-as 65300
 	  neighbor 4.4.4.2 password c0$ta
+	  neighbor 4.4.4.2 filter-list 1 out
 	  neighbor 4.4.4.2 route-map rm65400 in 
+	!
+	ip as-path access-list 1 deny _65000_
+	ip as-path access-list 1 permit .*
 	!
 	route-map no_export
 	  set community no-export
@@ -678,10 +686,13 @@ node n6 {
 	  neighbor 4.4.4.1 password c0$ta
 	  neighbor 6.6.6.2 remote-as 65400
 	  neighbor 6.6.6.2 password c0$ta
+	  neighbor 6.6.6.2 filter-list 1 out
 	  neighbor 7.7.7.2 remote-as 65200
 	  neighbor 7.7.7.2 password c0$ta
 	!
-	
+	ip as-path access-list 1 deny _65000_
+	ip as-path access-list 1 permit .*
+	!
 	}
     }
     interface-peer {eth4 n23}
