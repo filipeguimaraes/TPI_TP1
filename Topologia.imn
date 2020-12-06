@@ -214,6 +214,7 @@ node n2 {
 	  neighbor 3.3.3.2 filter-list 1 out
 	  neighbor 2.2.2.2 remote-as 65000
 	  neighbor 2.2.2.2 password c0$ta
+	  neighbor 2.2.2.2 route-map rm65000 in
 	  neighbor 2.2.2.2 filter-list 1 out
 	  neighbor 10.1.2.1 remote-as 65100
 	  neighbor 10.1.2.1 password c0$ta
@@ -233,7 +234,14 @@ node n2 {
 	!
 	route-map rm65200 permit 20
 	!
+	route-map rm65000 permit 10
+	 match ip address prefix-list as65000
+	 set local-preference 800
+	!
+	route-map rm65000 permit 20
+	!
 	ip prefix-list as65200 permit 10.2.0.0/16
+	ip prefix-list as65000 permit 10.0.0.0/16
 	!
 	router ospf
 	  router-id 10.1.2.2
