@@ -22,8 +22,8 @@ node n1 {
 	!
     }
     canvas c1
-    iconcoords {1163.0 579.0}
-    labelcoords {1163.0 611.0}
+    iconcoords {1164.0 579.0}
+    labelcoords {1164.0 611.0}
     services {BGP RIP zebra IPForward}
     interface-peer {eth0 n7}
     interface-peer {eth1 n2}
@@ -77,20 +77,22 @@ node n1 {
 	  redistribute rip
 	  neighbor 1.1.1.2 remote-as 65200
 	  neighbor 1.1.1.2 password c0$ta
-	  neighbor 1.1.1.2 route-map LOCAL-PREF in
+	  neighbor 1.1.1.2 route-map rm65200 in
 	  neighbor 2.2.2.1 remote-as 65100
 	  neighbor 2.2.2.1 password c0$ta
-	  neighbor 2.2.2.1 route-map LOCAL-PREF in
+	  neighbor 2.2.2.1 route-map rm65100 in
 	!
-	route-map LOCAL-PREF permit 10
+	route-map rm65100 permit 10
 	  match ip address prefix-list as65100
-	  set local-preference 200
+	  set local-preference 800
 	!
-	route-map LOCAL-PREF permit 20
+	route-map rm65100 permit 20
+	!
+	route-map rm65200 permit 10
 	  match ip address prefix-list as65200
-	  set local-preference 200
+	  set local-preference 800
 	!
-	route-map LOCAL-PREF permit 30
+	route-map rm65200 permit 20
 	!
 	ip prefix-list as65100 permit 10.1.0.0/16
 	ip prefix-list as65200 permit 10.2.0.0/16
@@ -133,8 +135,8 @@ node n2 {
 	!
     }
     canvas c1
-    iconcoords {593.0 509.0}
-    labelcoords {593.0 541.0}
+    iconcoords {592.0 509.0}
+    labelcoords {592.0 541.0}
     services {BGP OSPFv2 zebra IPForward}
     interface-peer {eth0 n1}
     interface-peer {eth1 n4}
@@ -209,45 +211,29 @@ node n2 {
 	  neighbor 3.3.3.2 remote-as 65200
 	  neighbor 3.3.3.2 password c0$ta
 	  neighbor 3.3.3.2 route-map rm65200 in
+	  neighbor 3.3.3.2 filter-list 1 out
 	  neighbor 2.2.2.2 remote-as 65000
 	  neighbor 2.2.2.2 password c0$ta
+	  neighbor 2.2.2.2 filter-list 1 out
 	  neighbor 10.1.2.1 remote-as 65100
 	  neighbor 10.1.2.1 password c0$ta
 	  neighbor 10.1.2.1 next-hop-self
-	  neighbor 10.1.2.1 route-map no_export out
-	  neighbor 10.1.2.1 send-community
-	  neighbor 10.1.2.1 route-map rm65400 in
 	  neighbor 10.1.3.2 remote-as 65100
 	  neighbor 10.1.3.2 password c0$ta
 	  neighbor 10.1.3.2 next-hop-self
-	  neighbor 10.1.3.2 route-map no_export out
-	  neighbor 10.1.3.2 send-community
-	  neighbor 10.1.3.2 route-map rm65300 in
 	!
-	route-map no_export 
-	  set community no-export
+	ip prefix-list access-list 1 permit 10.1.0.0/16
+	ip as-path access-list 1 deny _65300_
+	ip as-path access-list 1 deny _65400_
+	ip as-path access-list 1 permit .*
 	!
 	route-map rm65200 permit 10
 	 match ip address prefix-list as65200
-	 set local-preference 400
+	 set local-preference 800
 	!
 	route-map rm65200 permit 20
 	!
-	route-map rm65300 permit 10
-	 match ip address prefix-list as65300
-	 set local-preference 200
-	!
-	route-map rm65300 permit 20
-	!
-	route-map rm65400 permit 10
-	 match ip address prefix-list as65400
-	 set local-preference 200
-	!
-	route-map rm65400 permit 20
-	!
 	ip prefix-list as65200 permit 10.2.0.0/16
-	ip prefix-list as65300 permit 10.3.0.0/16  
-	ip prefix-list as65400 permit 10.4.0.0/16 
 	!
 	router ospf
 	  router-id 10.1.2.2
@@ -351,15 +337,9 @@ node n3 {
 	  neighbor 10.1.1.1 remote-as 65100
 	  neighbor 10.1.1.1 password c0$ta
 	  neighbor 10.1.1.1 next-hop-self
-	  neighbor 10.1.1.1 route-map no_export out
-	  neighbor 10.1.1.1 route-map rm65400 in
-	  neighbor 10.1.1.1 send-community
 	  neighbor 10.1.3.1 remote-as 65100
 	  neighbor 10.1.3.1 password c0$ta
 	  neighbor 10.1.3.1 next-hop-self
-	  neighbor 10.1.3.1 route-map no_export out
-	  neighbor 10.1.3.1 route-map rm65200 in
-	  neighbor 10.1.3.1 send-community
 	  neighbor 5.5.5.2 remote-as 65300
 	  neighbor 5.5.5.2 password c0$ta
 	  neighbor 5.5.5.2 filter-list 1 out
@@ -367,32 +347,16 @@ node n3 {
 	!
 	ip prefix-list access-list 1 permit 10.1.0.0/16
 	ip as-path access-list 1 deny _65000_
+	ip as-path access-list 1 deny _65200_
 	ip as-path access-list 1 permit .*
-	!
-	route-map no_export
-	  set community no-export
-	!
-	route-map rm65200 permit 10
-	 match ip address prefix-list as65200
-	 set local-preference 200
-	!
-	route-map rm65200 permit 20
 	!
 	route-map rm65300 permit 10
 	 match ip address prefix-list as65300
-	 set local-preference 200
+	 set local-preference 800
 	!
 	route-map rm65300 permit 20
 	!
-	route-map rm65400 permit 10
-	 match ip address prefix-list as65400
-	 set local-preference 200
-	!
-	route-map rm65400 permit 20
-	!
-	ip prefix-list as65200 permit 10.2.0.0/16
 	ip prefix-list as65300 permit 10.3.0.0/16
-	ip prefix-list as65400 permit 10.4.0.0/16
 	!
 	router ospf
 	  router-id 10.1.4.1
@@ -482,15 +446,9 @@ node n4 {
 	  neighbor 10.1.1.2 remote-as 65100
 	  neighbor 10.1.1.2 password c0$ta
 	  neighbor 10.1.1.2 next-hop-self
-	  neighbor 10.1.1.2 route-map no_export out
-	  neighbor 10.1.1.2 route-map rm65300 in
-	  neighbor 10.1.1.2 send-community
 	  neighbor 10.1.2.2 remote-as 65100
 	  neighbor 10.1.2.2 password c0$ta
 	  neighbor 10.1.2.2 next-hop-self
-	  neighbor 10.1.2.2 route-map no_export out
-	  neighbor 10.1.2.2 route-map rm65200 in
-	  neighbor 10.1.2.2 send-community
 	  neighbor 4.4.4.2 remote-as 65300
 	  neighbor 4.4.4.2 password c0$ta
 	  neighbor 4.4.4.2 filter-list 1 out
@@ -498,31 +456,15 @@ node n4 {
 	!
 	ip prefix-list access-list 1 permit 10.1.0.0/16
 	ip as-path access-list 1 deny _65000_
+	ip as-path access-list 1 deny _65200_
 	ip as-path access-list 1 permit .*
-	!
-	route-map no_export
-	  set community no-export
-	!
-	route-map rm65200 permit 10
-	 match ip address prefix-list as65200
-	 set local-preference 200
-	!
-	route-map rm65200 permit 20
-	!
-	route-map rm65300 permit 10
-	 match ip address prefix-list as65300
-	 set local-preference 200
-	!
-	route-map rm65300 permit 20
 	!
 	route-map rm65400 permit 10
 	 match ip address prefix-list as65400
-	 set local-preference 200
+	 set local-preference 800
 	!
 	route-map rm65400 permit 20
 	!
-	ip prefix-list as65200 permit 10.2.0.0/16
-	ip prefix-list as65300 permit 10.3.0.0/16
 	ip prefix-list as65400 permit 10.4.0.0/16
 	!
 	router ospf
@@ -555,8 +497,8 @@ node n5 {
 	!
     }
     canvas c1
-    iconcoords {246.0 217.0}
-    labelcoords {246.0 249.0}
+    iconcoords {245.0 217.0}
+    labelcoords {245.0 249.0}
     services {BGP zebra IPForward}
     interface-peer {eth1 n6}
     interface-peer {eth0 n3}
@@ -599,7 +541,15 @@ node n5 {
 	  neighbor 10.3.1.2 next-hop-self
 	  neighbor 5.5.5.1 remote-as 65100
 	  neighbor 5.5.5.1 password c0$ta
+	  neighbor 5.5.5.1 route-map rm65100 in
 	! 
+	route-map rm65100 permit 10
+	 match ip address prefix-list as65100
+	 set local-preference 800
+	!
+	route-map rm65100 permit 20
+	!
+	ip prefix-list as65100 permit 10.1.0.0/16
 	!
 	
 	}
@@ -772,7 +722,7 @@ node n7 {
 	 redistribute static
 	 neighbor 1.1.1.1 remote-as 65000
 	 neighbor 1.1.1.1 password c0$ta
-	 neighbor 1.1.1.1 route-map LOCAL-PREF in
+	 neighbor 1.1.1.1 route-map rm65000 in
 	 neighbor 3.3.3.1 remote-as 65100
 	 neighbor 3.3.3.1 password c0$ta
 	 neighbor 7.7.7.1 remote-as 65300
@@ -780,11 +730,11 @@ node n7 {
 	 neighbor 8.8.8.1 remote-as 65400
 	 neighbor 8.8.8.1 password c0$ta
 	!
-	route-map LOCAL-PREF permit 10
+	route-map rm65000 permit 10
 	  match ip address prefix-list as65000
-	  set local-preference 200
+	  set local-preference 800
 	!
-	route-map LOCAL-PREF permit 20
+	route-map rm65000 permit 20
 	!
 	ip prefix-list as65000 permit 10.0.0.0/16
 	!
