@@ -94,8 +94,8 @@ node n1 {
 	!
 	route-map rm65200 permit 20
 	!
-	ip prefix-list as65100 permit 10.1.0.0/16
-	ip prefix-list as65200 permit 10.2.0.0/16
+	ip prefix-list as65100 permit 10.1.0.0/16 le 24
+	ip prefix-list as65200 permit 10.2.0.0/16 le 24
 	!
 	router rip
 	  network 10.0.2.1/24
@@ -135,8 +135,8 @@ node n2 {
 	!
     }
     canvas c1
-    iconcoords {592.0 509.0}
-    labelcoords {592.0 541.0}
+    iconcoords {591.0 509.0}
+    labelcoords {591.0 541.0}
     services {BGP OSPFv2 zebra IPForward}
     interface-peer {eth0 n1}
     interface-peer {eth1 n4}
@@ -239,8 +239,8 @@ node n2 {
 	!
 	route-map rm65000 permit 20
 	!
-	ip prefix-list as65200 permit 10.2.0.0/16
-	ip prefix-list as65000 permit 10.0.0.0/16
+	ip prefix-list as65200 permit 10.2.0.0/16 le 24
+	ip prefix-list as65000 permit 10.0.0.0/16 le 24
 	!
 	router ospf
 	  router-id 10.1.2.2
@@ -363,7 +363,7 @@ node n3 {
 	!
 	route-map rm65300 permit 20
 	!
-	ip prefix-list as65300 permit 10.3.0.0/16
+	ip prefix-list as65300 permit 10.3.0.0/16 le 24
 	!
 	router ospf
 	  router-id 10.1.4.1
@@ -472,7 +472,7 @@ node n4 {
 	!
 	route-map rm65400 permit 20
 	!
-	ip prefix-list as65400 permit 10.4.0.0/16
+	ip prefix-list as65400 permit 10.4.0.0/16 le 24
 	!
 	router ospf
 	  router-id 10.1.0.5
@@ -556,7 +556,7 @@ node n5 {
 	!
 	route-map rm65100 permit 20
 	!
-	ip prefix-list as65100 permit 10.1.0.0/16
+	ip prefix-list as65100 permit 10.1.0.0/16 le 24
 	!
 	
 	}
@@ -743,7 +743,7 @@ node n7 {
 	!
 	route-map rm65000 permit 20
 	!
-	ip prefix-list as65000 permit 10.0.0.0/16
+	ip prefix-list as65000 permit 10.0.0.0/16 le 24
 	!
 	 address-family ipv6
 	
