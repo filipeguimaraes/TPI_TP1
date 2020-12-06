@@ -207,15 +207,14 @@ node n2 {
 	  bgp router-id 10.1.2.2
 	  network 10.1.0.0/16
 	  redistribute connected
-	  redistribute ospf
 	  neighbor 3.3.3.2 remote-as 65200
 	  neighbor 3.3.3.2 password c0$ta
-	  neighbor 3.3.3.2 route-map rm65200 in
 	  neighbor 3.3.3.2 filter-list 1 out
+	  neighbor 3.3.3.2 route-map rm65200 in
 	  neighbor 2.2.2.2 remote-as 65000
 	  neighbor 2.2.2.2 password c0$ta
-	  neighbor 2.2.2.2 route-map rm65000 in
 	  neighbor 2.2.2.2 filter-list 1 out
+	  neighbor 2.2.2.2 route-map rm65000 in
 	  neighbor 10.1.2.1 remote-as 65100
 	  neighbor 10.1.2.1 password c0$ta
 	  neighbor 10.1.2.1 next-hop-self
