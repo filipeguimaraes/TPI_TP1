@@ -348,7 +348,6 @@ node n3 {
 	  bgp router-id 10.1.0.8
 	  network 10.1.0.0/16
 	  redistribute connected
-	  redistribute ospf
 	  neighbor 10.1.1.1 remote-as 65100
 	  neighbor 10.1.1.1 password c0$ta
 	  neighbor 10.1.1.1 next-hop-self
@@ -366,6 +365,7 @@ node n3 {
 	  neighbor 5.5.5.2 filter-list 1 out
 	  neighbor 5.5.5.2 route-map rm65300 in
 	!
+	ip prefix-list access-list 1 permit 10.1.0.0/16
 	ip as-path access-list 1 deny _65000_
 	ip as-path access-list 1 permit .*
 	!
@@ -479,7 +479,6 @@ node n4 {
 	  bgp router-id 10.1.0.5
 	  network 10.1.0.0/16
 	  redistribute connected
-	  redistribute ospf
 	  neighbor 10.1.1.2 remote-as 65100
 	  neighbor 10.1.1.2 password c0$ta
 	  neighbor 10.1.1.2 next-hop-self
@@ -497,6 +496,7 @@ node n4 {
 	  neighbor 4.4.4.2 filter-list 1 out
 	  neighbor 4.4.4.2 route-map rm65400 in 
 	!
+	ip prefix-list access-list 1 permit 10.1.0.0/16
 	ip as-path access-list 1 deny _65000_
 	ip as-path access-list 1 permit .*
 	!
